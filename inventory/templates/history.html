@@ -1,0 +1,33 @@
+{% extends "master.html" %}
+
+{% block header %} Historik {% endblock %}
+
+{% block content %}
+
+<table border="1">
+  <thead>
+    <tr>
+      <td>Id</td>
+      <td>Produkt</td>
+      <td>Antal</td>
+      <td>Ændring</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for event in events %}
+    <tr>
+      <td colspan="4">{{ event.description }} i anledning af TODO udført af {{ event.name }} {{ event.date }} {{ event.time }}</td>
+    </tr>
+    {% for change in event.change_set.all %}
+    <tr>
+      <td>{{ change.pk }}</td>
+      <td>{{ change.product }}</td>
+      <td>{{ change.quantity }}</td>
+      <td>{{ change.delta }}</td>
+    </tr>
+    {% endfor %}
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

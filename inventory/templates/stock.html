@@ -1,0 +1,30 @@
+{% extends "master.html" %}
+
+{% block header %}Lagerbeholdning{% endblock %}
+{# {% block script %} <script type="text/javascript" src="{% static "js/ #}
+
+{% block content %}
+
+<table class="sortable" border="1">
+  <thead>
+    <tr>
+      <td>Id</td>
+      <td>Navn</td>
+      <td>Leverandør</td>
+      <td>Antal</td>
+      <td>Sidst ændret</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <td>{{ product.pk }}</td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.vendor }}</td>
+      <td>{{ product.quantity }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
