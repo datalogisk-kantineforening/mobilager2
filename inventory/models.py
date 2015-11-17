@@ -8,7 +8,7 @@ class Vendor(models.Model):
 class User(models.Model):
     name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
-    acribe = models.BooleanField()
+    active = models.BooleanField()
 
     def __str__(self):
         return self.name
@@ -18,6 +18,7 @@ class Product(models.Model):
     vendor = models.ForeignKey(Vendor)
     quantity = models.IntegerField(default=0)
     discontinued = models.BooleanField(default=False)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -30,7 +31,6 @@ class EventType(models.Model):
 
 
 class Event(models.Model):
-    name = models.ForeignKey(User)
     other_name = models.CharField(max_length=255, default="")
     description = models.TextField()
     date = models.DateField(auto_now_add=True)
@@ -47,7 +47,7 @@ class EventName(models.Model):
     event = models.ForeignKey(Event)
 
     def __str__(self):
-        return self.name + " participating in " + self.event
+        return str(self.name)
 
 class Change(models.Model):
     event = models.ForeignKey(Event)

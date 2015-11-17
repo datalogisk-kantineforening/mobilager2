@@ -11,7 +11,8 @@ def stock(request):
 def replenish(request):
     products = Product.objects.all().filter(discontinued=False)
     if request.method == 'GET':
-        users = User.objects.all()
+        users = User.objects.all().filter(active=True)
+        print(users)
         context = {'products': products, 'names': users}
         return render(request, "replenish.html", context)
     elif request.method == 'POST':
@@ -29,10 +30,12 @@ def replenish(request):
                 p.save()
         changes = []
         if len(updated) > 0:
-            user = User.objects.get(pk = request.POST['who'])
-            event = Event(name = user,
-                          description = request.POST['what'])
+            event = Event(description = request.POST['what'])
             event.save()
+            for u in request.POST.getlist("who"):
+                event.eventname_set.add(EventName(
+                    name = User.objects.get(pk = u)))
+            #user = User.objects.get(pk = request.POST['who'])
             for p, old_qty in updated:
                 print("old_qty " + str(old_qty))
                 event.change_set.add(Change(product = p,
@@ -42,10 +45,10 @@ def replenish(request):
         return HttpResponseRedirect("/replenish/")
 
 def restock(request):
-    pass
+    return render(request, "restock.html")
 
 def correction(request):
-    pass
+    return render(request, "correction.html")
 
 def history(request):
     events = Event.objects.order_by("-date").order_by("-time")

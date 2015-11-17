@@ -1,0 +1,47 @@
+{% extends "master.html" %}
+
+{% block header %} Levering {% endblock %}
+
+{% block script %}
+{% load staticfiles %}
+<script type="text/javascript" src="{% static "js/quantity-widget.js" %}"></script>
+
+<style>
+  .nqty { background-color:red }
+  .qfield { width: 40px;
+            border: none;}
+</style>
+
+<!--<div class="flex flex-column">
+  <div>Før: <span class="prev-qty"></span></div>
+  <div class="clearfix border" style="width: 130px">
+    <button type="button" class="minus btn">-</button>
+    <input type="text" class="qfield field ml2" />
+    <button  type="button" class="minus btn">-</button>
+  </div>
+  <div>Efter: <span class="new-qty"></span></div>
+</div>-->
+
+
+<script type="text/javascript">
+$(function() {
+    $(".quantity-widget").each(
+        function(i, e){
+            $(e).quantity({'id': i, 'validator': function(v) {
+                return v <= 0;
+            }});});
+});
+
+</script>
+
+{% endblock %}
+
+{% block nav-restock %}btn-primary{% endblock %}
+
+{% block content %}
+
+<input id="qty" class="quantity-widget" value="10" />
+<input id="qty" class="quantity-widget" value="15" />
+<input id="qty" class="quantity-widget" value="5" />
+
+{% endblock %}

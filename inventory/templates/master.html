@@ -1,33 +1,50 @@
-{#<?xml version="1.0" encoding="utf-8"?>#}
 <!DOCTYPE htnl>
-<html>
-  <head>
-    <title>Lagerstyring - {% block title %} {% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% static "css/basscss.min.css" %} />
-    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.min.css" %} />
+<html lang="en">
+    <head>
+        <meta charset="utf=8" />
+    <title>Lagerstyring - {% block header %} {% endblock %}</title>
     {% load staticfiles %}
+
     <script type="text/javascript" src="{% static  "js/jquery-2.1.4.min.js" %}" ></script>
+    <script type="text/javascript" src="{% static  "js/jquery-ui.min.js" %}" ></script>
+    <!-- -<link rel="stylesheet" type="text/css" href="{% static "css/theme.css" %}" />-->
+    <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/basscss.min.css" %}" />
+
+
     {% block script %} {% endblock %}
   </head>
   <body>
-    <header>
-      <h1>Lagerstyring - {% block header %} {% endblock %}</h1>
-    </header>
-    <nav>
-      <ul>
-        <li><a href="/stock">Lagerbeholdning</a></li>
-        <li><a href="/restock">Levering</a></li>
-        <li><a href="/replenish">Opfyldning</a></li>
-        <li><a href="/correction">Korrektion</a></li>
-        <li><a href="/history">Historik</a></li>
-    </nav>
-    <main>
-      <section>
-        {% block content %} {% endblock %}
+    <div class="container">
+      <header class="center">
+        <h1>Kantinens Lagerstyring</h1>
+      </header>
+      <nav class="sm-flex center nowrap mb2">
+        <div class="flex-auto">
+          <a class="btn block {% block nav-stock %}{% endblock %}" href="/stock">Lagerbeholdning</a>
+        </div>
+        <div class="flex-auto">
+          <a class="btn block {% block nav-restock %}{% endblock %}" href="/restock">Levering</a>
+        </div>
+
+        <div class="flex-auto">
+          <a class="btn block {% block nav-replenish %}{% endblock %}" href="/replenish">Opfyldning</a>
+        </div>
+        <div class="flex-auto">
+          <a class="btn block {% block nav-correction %}{% endblock %}" href="/correction">Korrektion</a>
+        </div>
+        <div class="flex-auto">
+          <a class="btn block {% block nav-history %}{% endblock %}" href="/history">Historik</a>
+        </div>
+        </nav>
+        <main>
+          <section>
+            {% block content %} {% endblock %}
       </section>
-    </main>
-    <footer>
+        </main>
+        <!--<footer>
       Sonething about this site
-    </footer>
+    </footer>-->
+  </div>
   </body>
 </html>

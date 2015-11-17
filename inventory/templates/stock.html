@@ -2,26 +2,38 @@
 
 {% block header %}Lagerbeholdning{% endblock %}
 {# {% block script %} <script type="text/javascript" src="{% static "js/ #}
+{% block script %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "css/tablesorter-blue.css" %}" />
+<script type="text/javascript" src="{% static "js/jquery.tablesorter.min.js" %}"> </script>
+
+<script type="text/javascript">
+ $(function() {
+     $("#stock").tablesorter({sortList: [[2,0], [0,0]]});
+ });
+</script>
+{% endblock %}
+
+{% block nav-stock %}btn-primary{% endblock %}
 
 {% block content %}
 
-<table class="sortable" border="1">
+<table id="stock" class="border tablesorter">
   <thead>
     <tr>
-      <td>Id</td>
-      <td>Navn</td>
-      <td>Leverandør</td>
-      <td>Antal</td>
-      <td>Sidst ændret</td>
+      <th>Navn</th>
+      <th>Leverandør</th>
+      <th>Antal</th>
+      <th>Sidst ændret</th>
     </tr>
   </thead>
   <tbody>
     {% for product in products %}
     <tr>
-      <td>{{ product.pk }}</td>
       <td>{{ product.name }}</td>
       <td>{{ product.vendor }}</td>
       <td>{{ product.quantity }}</td>
+      <td>{{ product.changed }}</td>
     </tr>
     {% endfor %}
   </tbody>

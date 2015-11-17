@@ -2,9 +2,13 @@
 
 {% block header %} Historik {% endblock %}
 
+
+{% block nav-history %}btn-primary{% endblock %}
+
+
 {% block content %}
 
-<table border="1">
+<table class="border tablesorter" >
   <thead>
     <tr>
       <td>Id</td>
@@ -16,7 +20,7 @@
   <tbody>
     {% for event in events %}
     <tr>
-      <td colspan="4">{{ event.description }} i anledning af TODO udført af {{ event.name }} {{ event.date }} {{ event.time }}</td>
+      <td colspan="4">{{ event.description }} i anledning af TODO udført af {% for u in event.eventname_set.all %}{{ u|capfirst }} {% endfor %} {{ event.date }} {{ event.time }}</td>
     </tr>
     {% for change in event.change_set.all %}
     <tr>
