@@ -2,36 +2,52 @@
 
 {% block header %} Historik {% endblock %}
 
-
 {% block nav-history %}btn-primary{% endblock %}
 
+{% block script %}
+<style type="text/css">
+  .bg-1d { background-color: #BBBBBB; }
+  .bg-1l { background-color: #CCCCCC; }
+  .bg-2d { background-color: #DDDDDD; }
+  .bg-2l { background-color: #EEEEEE; }
+</style>
+{% endblock %}
 
 {% block content %}
 
-<table class="border tablesorter" >
-  <thead>
-    <tr>
-      <td>Id</td>
-      <td>Produkt</td>
-      <td>Antal</td>
-      <td>Ændring</td>
-    </tr>
-  </thead>
-  <tbody>
-    {% for event in events %}
-    <tr>
-      <td colspan="4">{{ event.description }} i anledning af TODO udført af {% for u in event.eventname_set.all %}{{ u|capfirst }} {% endfor %} {{ event.date }} {{ event.time }}</td>
-    </tr>
-    {% for change in event.change_set.all %}
-    <tr>
-      <td>{{ change.pk }}</td>
-      <td>{{ change.product }}</td>
-      <td>{{ change.quantity }}</td>
-      <td>{{ change.delta }}</td>
-    </tr>
-    {% endfor %}
-  {% endfor %}
-  </tbody>
-</table>
+{% load danishlist %}
 
+{% for event in events %}
+<div class="container border mb1 p1">
+  {{ event.description }} udført af
+    {# {% for u in event.eventname_set.all %}{{ u|capfirst }} {% endfor %} #}
+    {{ event.eventname_set.all|danishlist }}
+  {{ event.date }} {{ event.time }}
+
+
+  <div class="clearfix p1" style="font-size: 0.85em">
+      <div class="col col-2 p1 bold bg-1d">Produkt</div>
+      <div class="col col-2 p1 bold bg-1l">Kvantitet</div>
+      <div class="col col-2 p1 bold bg-1d">Ændring</div>
+      <div class="col col-2 p1 bold bg-2l">Produkt</div>
+      <div class="col col-2 p1 bold bg-2d">Kvantitet</div>
+      <div class="col col-2 p1 bold bg-2l">Ændring</div>
+
+      {% for change in event.change_set.all %}
+
+      <div class="col col-2 px1 {{ forloop.counter|divisibleby:2|yesno:'bg-2l,bg-1d' }}">{{ change.product }}</div>
+      <div class="col col-2 px1 {{ forloop.counter|divisibleby:2|yesno:'bg-2d,bg-1l' }}">{{ change.quantity }}</div>
+      <div class="col col-2 px1 {{ forloop.counter|divisibleby:2|yesno:'bg-2l,bg-1d' }}">{{ change.delta }}</div>
+      {% endfor %}
+
+      {% if not event.change_set.all|length|divisibleby:2 %}
+      <div class="col col-2 px1 bg-2l">&nbsp;</div>
+      <div class="col col-2 px1 bg-2d">&nbsp;</div>
+      <div class="col col-2 px1 bg-2l">&nbsp;</div>
+      {% endif %}
+
+  </div>
+  <a href="#">Vis fuld lagerbeholdning</a>
+</div>
+{% endfor %}
 {% endblock %}
