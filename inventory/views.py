@@ -17,13 +17,13 @@ def _update_stock(request, change_type):
         updated = []
         for p in products:
             req_qty = int(request.POST[str(p.pk) + "_qty"])
-            if req_qty != p.quantity:
-                # FIXME: Do log handling here
-                old_qty = p.quantity
-                p.quantity = req_qty
-                print("Changed quantity" + str(req_qty))
-                updated.append((p, old_qty))
-                p.save()
+            changed = req_qty != p.quantity:
+            # FIXME: Do log handling here
+            old_qty = p.quantity
+            p.quantity = req_qty
+            print("Changed quantity" + str(req_qty))
+            updated.append((p, old_qty))
+            p.save()
         changes = []
         if len(updated) > 0:
             event = Event(description = request.POST['what'])
