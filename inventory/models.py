@@ -16,7 +16,7 @@ class User(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=255)
     vendor = models.ForeignKey(Vendor)
-    quantity = models.IntegerField(default=0)
+    quantity = models.PositiveIntegerField(default=0)
     discontinued = models.BooleanField(default=False)
     updated = models.DateTimeField(auto_now=True)
 
@@ -24,17 +24,18 @@ class Product(models.Model):
         return self.name
 
 class EventType(models.Model):
+    tag = models.CharField(max_length=20)
     name = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.description
+        return self.name
 
 
 class Event(models.Model):
-    other_name = models.CharField(max_length=255, default="")
     description = models.TextField()
     date = models.DateField(auto_now_add=True)
     time = models.TimeField(auto_now_add=True)
+    event_type = models.ForeignKey(EventType)
 
     def __str__(self):
         return self.description
@@ -52,7 +53,7 @@ class EventName(models.Model):
 class Change(models.Model):
     event = models.ForeignKey(Event)
     product = models.ForeignKey(Product)
-    quantity = models.IntegerField()
+    quantity = models.PositiveIntegerField()
     delta = models.IntegerField()
     confirmed = models.BooleanField(default=False)
 
