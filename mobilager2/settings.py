@@ -27,6 +27,7 @@ if not(devel):
     import sys
     sys.path.append(local_dir)
     import mobilager_db
+    from misc import *
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -72,7 +73,7 @@ ROOT_URLCONF = 'mobilager2.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.Contemplates',
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
