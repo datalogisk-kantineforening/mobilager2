@@ -26,7 +26,9 @@ def _update_stock(request, change_type):
             p.save()
         changes = []
         if len(updated) > 0:
-            event = Event(description = request.POST['what'])
+            # TODO: Do something better with EventType handling
+            event = Event(description = request.POST['what'],
+                          event_type = EventType.objects.get(tag = change_type))
             event.save()
             for u in request.POST.getlist("who"):
                 event.eventname_set.add(EventName(
