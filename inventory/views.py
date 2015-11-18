@@ -3,18 +3,14 @@ from django.http import HttpResponseRedirect
 
 from .models import *
 
-def stock(request):
-    products = Product.objects.all().filter(discontinued=False)
-    context = {'products': products}
-    return render(request, "stock.html", context)
 
-def replenish(request):
+def _update_stock(request, change_type):
     products = Product.objects.all().filter(discontinued=False)
     if request.method == 'GET':
         users = User.objects.all().filter(active=True)
         print(users)
         context = {'products': products, 'names': users}
-        return render(request, "replenish.html", context)
+        return render(request, change_type + ".html", context)
     elif request.method == 'POST':
         print(request.POST)
 
@@ -42,13 +38,22 @@ def replenish(request):
                                              quantity = p.quantity,
                                             delta = p.quantity - old_qty))
 
-        return HttpResponseRedirect("/replenish/")
+        return HttpResponseRedirect("/"+ change_type)
+
+
+def stock(request):
+    products = Product.objects.all().filter(discontinued=False)
+    context = {'products': products}
+    return render(request, "stock.html", context)
+
+def replenish(request):
+    return _update_stock(request, "replenish")
 
 def restock(request):
-    return render(request, "restock.html")
+    return _update_stock(request, "restock")
 
 def correction(request):
-    return render(request, "correction.html")
+    return _update_stock(request, "correction")
 
 def history(request):
     events = Event.objects.order_by("-date").order_by("-time")
