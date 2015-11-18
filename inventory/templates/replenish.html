@@ -1,77 +1,13 @@
-{% extends "master.html" %}
+{% extends "base-update.html" %}
 
 {% block header %} Opfyldning {% endblock %}
 
 {% block nav-replenish %}btn-primary{% endblock %}
 
-{% block script %}
-{% load staticfiles %}
-<script type="text/javascript" src="{% static "js/quantity-widget.js" %}"></script>
-
-<style>
-  .nqty { background-color:red }
-  .qfield { width: 40px;
-            border: none;}
-</style>
-
-<script type="text/javascript">
- $(function() {
-     $( "#names > input" ).each(
-         function(_i, e){
-             $(e).button();
-         });
-     $(".qty-widget").each(
-         function(i, e){
-             $(e).quantity({'id': i, 'validator': function(v) {
-                 return v <= 0;
-             }});
-         });
-
- });
-
-</script>
+{% block validator-fun %}
+function(v) {
+return v <= 0;
+}
 {% endblock %}
 
-{% block content %}
-<form method="POST" action="/replenish">
-  {% csrf_token %}
-
-    <!--<label value="Navn" for="who" />-->
-    <div class="container mb2 p1"><div class="clearfix">Hvem er med?</div>
-    <div id="names" class=".flex-wrap">
-    {% for name in names %}
-        <input type="checkbox" class="who" id="who{{name.pk}}" name="who" value="{{ name.pk }}" />
-    <label for="who{{name.pk}}">{{ name.name|capfirst }}</label>
-    {% endfor %}
-    </div>
-    </div>
-    <div class="container p1 mb2">
-        <label for="what" class="block">Beskrivelse</label>
-        <input type="text" name="what" class="field"/>
-    </div>
-  <table class="sortable">
-    <thead>
-      <tr>
-        <td class="center">
-          <div>Navn</div>
-          <div class="gray">Leverandør</div>
-        <td class="">Antal</td>
-      </tr>
-    </thead>
-    <tbody>
-      {% for product in products %}
-      <tr>
-        <!--<td>{{ product.pk }}</td>-->
-        <td class="center align-middle">
-          <div>{{ product.name }}</div>
-          <div class="gray">{{ product.vendor }}</div>
-        </td>
-        <td><input type="text" class="qty-widget" name="{{ product.pk }}_qty" value="{{ product.quantity }}" /></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <input type="submit" />
-</form>
-
-{% endblock %}
+{% block post-action %}/replenish{% endblock %}
