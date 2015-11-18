@@ -8,7 +8,7 @@ from .models import *
 def _update_stock(request, change_type):
     products = Product.objects.all().filter(discontinued=False)
     if request.method == 'GET':
-        users = User.objects.all().filter(active=True)
+        users = User.objects.all().filter(active=True).order_by('name')
         print(users)
         context = {'products': products, 'names': users}
         return render(request, change_type + ".html", context)
