@@ -17,7 +17,7 @@ def _update_stock(request, change_type):
         updated = []
         for p in products:
             req_qty = int(request.POST[str(p.pk) + "_qty"])
-            changed = req_qty != p.quantity:
+            changed = req_qty != p.quantity
             # FIXME: Do log handling here
             old_qty = p.quantity
             p.quantity = req_qty
