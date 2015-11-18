@@ -16,6 +16,7 @@
          function(_i, e){
              $(e).button();
          });
+     $( "input[type=submit]" ).button();
 
      $(".qty-widget").each(
 
@@ -73,7 +74,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <input type="submit" />
+    <input type="submit" value="Opdater" />
 </form>
 
 {% endblock %}
