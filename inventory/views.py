@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 from .models import *
 
@@ -59,4 +60,8 @@ def correction(request):
 
 def history(request):
     events = Event.objects.order_by("-date").order_by("-time")
-    return render(request, "history.html", {'events': events})
+    e = list(map(lambda x: {'event': x,
+                            'changes': x.change_set.filter(~Q(delta = 0))},
+             events))
+
+    return render(request, "history.html", {'events': e})
