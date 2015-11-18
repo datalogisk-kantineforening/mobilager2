@@ -13,19 +13,36 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+try:
+    devel = os.environ["DJANGO_ENV"] == 'DEV' or False
+except KeyError:
+    devel = False
+
+local_dir = ''
+if not(devel):
+    local_dir = os.environ["MOBILAGER_LOCAL_SETTINGS"]
+    import sys
+    sys.path.append(local_dir)
+    import mobilager_db
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'gdk8dyfzx5(+8u^6*u2x)1^_w5uruu7dqbbyhc5$kxo19w(p^b'
+SECRET_KEY=''
+if devel:
+    SECRET_KEY = 'gdk8dyfzx5(+8u^6*u2x)1^_w5uruu7dqbbyhc5$kxo19w(p^b'
+else:
+    with open(os.path.join(local_dir, "secret.key")) as f:
+        SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = devel
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mobilager.kantinen.org']
 
 
 # Application definition
@@ -55,7 +72,7 @@ ROOT_URLCONF = 'mobilager2.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'BACKEND': 'django.template.backends.django.Contemplates',
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -74,14 +91,17 @@ WSGI_APPLICATION = 'mobilager2.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'ATOMIC_REQUESTS': True,
+DATABASES = {}
+if devel:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'ATOMIC_REQUESTS': True,
+        }
     }
-}
+else:
+    DATABASES = mobilager_db.DATABASES
 
 
 # Internationalization
