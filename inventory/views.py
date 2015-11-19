@@ -9,11 +9,9 @@ def _update_stock(request, change_type):
     products = Product.objects.all().filter(discontinued=False)
     if request.method == 'GET':
         users = User.objects.all().filter(active=True).order_by('name')
-        print(users)
         context = {'products': products, 'names': users}
         return render(request, change_type + ".html", context)
     elif request.method == 'POST':
-        print(request.POST)
 
         updated = []
         for p in products:
@@ -22,7 +20,6 @@ def _update_stock(request, change_type):
             # FIXME: Do log handling here
             old_qty = p.quantity
             p.quantity = req_qty
-            print("Changed quantity" + str(req_qty))
             updated.append((p, old_qty))
             p.save()
         changes = []
@@ -34,9 +31,8 @@ def _update_stock(request, change_type):
             for u in request.POST.getlist("who"):
                 event.eventname_set.add(EventName(
                     name = User.objects.get(pk = u)))
-            #user = User.objects.get(pk = request.POST['who'])
+
             for p, old_qty in updated:
-                print("old_qty " + str(old_qty))
                 event.change_set.add(Change(product = p,
                                              quantity = p.quantity,
                                             delta = p.quantity - old_qty))

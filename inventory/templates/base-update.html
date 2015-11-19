@@ -39,7 +39,6 @@
 <form method="POST" action="{% block post-action %}{% endblock %}">
     {% csrf_token %}
 
-    <!--<label value="Navn" for="who" />-->
     <div class="container mb2 p1"><div class="block">Hvem er med?</div>
         <div id="names" class=".flex-wrap">
             {% for name in names %}
@@ -64,7 +63,6 @@
         <tbody>
             {% for product in products %}
             <tr>
-                <!--<td>{{ product.pk }}</td>-->
                 <td class="center align-middle">
                     <div>{{ product.name }}</div>
                     <div class="gray">{{ product.vendor }}</div>
