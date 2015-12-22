@@ -20,10 +20,9 @@ def _update_stock(request, change_type):
             # FIXME: Do log handling here
             old_qty = p.quantity
             p.quantity = req_qty
-            updated.append((p, old_qty))
-            p.save()
-        changes = []
-        if len(updated) > 0:
+            updated.append((p, old_qty, changed))
+            #p.save()
+        if any(map(lambda t: t[2], updated)):
             # TODO: Do something better with EventType handling
             event = Event(description = request.POST['what'],
                           event_type = EventType.objects.get(tag = change_type))
@@ -32,13 +31,15 @@ def _update_stock(request, change_type):
                 event.eventname_set.add(EventName(
                     name = User.objects.get(pk = u)))
 
-            for p, old_qty in updated:
+            for p, old_qty, _ in updated:
                 event.change_set.add(Change(product = p,
-                                             quantity = p.quantity,
+                                            quantity = p.quantity,
                                             delta = p.quantity - old_qty))
 
-        return HttpResponseRedirect("/"+ change_type)
-
+            return HttpResponseRedirect("/"+ change_type)
+        else:
+            # TODO: no changes were made. Show error message
+            return HttpResponseRedirect("/"+ change_type)
 
 def stock(request):
     products = Product.objects.all().filter(discontinued=False)
