@@ -9,7 +9,9 @@ def _update_stock(request, change_type):
     products = Product.objects.all().filter(discontinued=False)
     if request.method == 'GET':
         users = User.objects.all().filter(active=True).order_by('name')
-        context = {'products': products, 'names': users}
+        context = {'sellables': products.filter(category=0), #FIXME: Magic numbers
+                   'refundables': products.filter(category=1),
+                   'names': users}
         return render(request, change_type + ".html", context)
     elif request.method == 'POST':
 

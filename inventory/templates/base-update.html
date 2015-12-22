@@ -18,18 +18,29 @@
          });
      $( "input[type=submit]" ).button();
 
-     $(".qty-widget").each(
-
+     $(".qty-widget-sellable").each(
          function(i, e){
              $(e).quantity({'id': i, 'validator':
-            {% block validator-fun %}
+            {% block validator-sellable %}
                             function(v) {
-                 return true;
+                                return true;
                             }
                  {% endblock %}
              });
 
          });
+     $(".qty-widget-refundable").each(
+         function(i, e){
+             $(e).quantity({'id': i, 'validator':
+                            {% block validator-refundable %}
+                 function(v) {
+                     return true;
+                 }
+                 {% endblock %}
+             });
+
+         });
+
  });
 
 </script>
@@ -51,6 +62,7 @@
         <label for="what" class="block">Beskrivelse</label>
         <input type="text" name="what" class="field"/>
     </div>
+    <h2>Salgsvarer</h2>
     <table class="sortable">
         <thead>
             <tr>
@@ -61,17 +73,40 @@
             </tr>
         </thead>
         <tbody>
-            {% for product in products %}
+            {% for product in sellables %}
             <tr>
                 <td class="center align-middle">
                     <div>{{ product.name }}</div>
                     <div class="gray">{{ product.vendor }}</div>
                 </td>
-                <td><input type="text" class="qty-widget" name="{{ product.pk }}_qty" value="{{ product.quantity }}" /></td>
+                <td><input type="text" class="qty-widget-sellable" name="{{ product.pk }}_qty" value="{{ product.quantity }}" /></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    <h2>Returvarer (pant)</h2>
+    <table class="sortable">
+        <thead>
+            <tr>
+                <td class="center">
+                    <div>Navn</div>
+                    <div class="gray">Leverandør</div>
+                    <td class="">Antal</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in refundables %}
+            <tr>
+                <td class="center align-middle">
+                    <div>{{ product.name }}</div>
+                    <div class="gray">{{ product.vendor }}</div>
+                </td>
+                <td><input type="text" class="qty-widget-refundable" name="{{ product.pk }}_qty" value="{{ product.quantity }}" /></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
     <input type="submit" value="Opdater" />
 </form>
 

@@ -4,10 +4,16 @@
 
 {% block nav-restock %}btn-primary{% endblock %}
 
-{% block validator-fun %}
+{% block validator-sellable %}
 function(v) {
 return v >= 0;
 }
 {% endblock %}
+{% block validator-refundable %}
+function(v) {
+return v <= 0;
+}
+{% endblock %}
+
 
 {% block post-action %}/restock{% endblock %}

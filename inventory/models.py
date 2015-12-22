@@ -14,11 +14,17 @@ class User(models.Model):
         return self.name
 
 class Product(models.Model):
+    categories = tuple(enumerate(('Sellable',
+                                  'Refundable')))
+    default_cat = categories[0][0]
+
     name = models.CharField(max_length=255)
     vendor = models.ForeignKey(Vendor)
     quantity = models.PositiveIntegerField(default=0)
     discontinued = models.BooleanField(default=False)
     updated = models.DateTimeField(auto_now=True)
+    category = models.IntegerField(choices=categories,
+                                   default=default_cat)
 
     def __str__(self):
         return self.name
