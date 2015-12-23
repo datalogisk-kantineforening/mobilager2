@@ -52,7 +52,7 @@ $(function() {
             var s = o._state;
             var block = $('<div class="flex flex-column">\
 <div>Før: <span class="prev-qty"></span></div>\
-<div class="clearfix border" style="width: 140px">\
+<div class="clearfix border" style="width: 141px">\
 <button type="button" class="minus btn">-</button>\
 <input type="text" value="0" class="delta qfield field ml2" />\
 <button type="button" class="plus btn">+</button>\
@@ -77,13 +77,15 @@ $(function() {
             this.options.quantity = parseInt(this.element.attr("value"));
             this.element.after(block);
 
-            s.minus.click(this, function(event) {
+            s.minus.on("click touchstart", this, function(event) {
                 event.data._adjust(function(v) {return v - 1;},
                                    event.data);
+                event.preventDefault();
             });
-            s.plus.click(this, function(event) {
+            s.plus.on("click touchstart", this, function(event) {
                 event.data._adjust(function(v) {return v + 1;},
                                    event.data);
+                event.preventDefault();
             });
 
             this.refresh();
