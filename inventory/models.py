@@ -3,7 +3,7 @@ from django.db import models
 class Vendor(models.Model):
     name = models.CharField(max_length=255, primary_key=True)
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 class User(models.Model):
     name = models.CharField(max_length=255)
@@ -11,7 +11,7 @@ class User(models.Model):
     active = models.BooleanField()
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 class Product(models.Model):
     categories = tuple(enumerate(('Sellable',
@@ -27,14 +27,14 @@ class Product(models.Model):
                                    default=default_cat)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 class EventType(models.Model):
     tag = models.CharField(max_length=20)
     name = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class Event(models.Model):
@@ -44,7 +44,7 @@ class Event(models.Model):
     event_type = models.ForeignKey(EventType)
 
     def __str__(self):
-        return self.description
+        return str(self.description)
 
     class Meta:
         ordering = ["date", "time"]
@@ -64,7 +64,7 @@ class Change(models.Model):
     confirmed = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.product
+        return str(self.product)
 
     def changed(self):
         return self.delta != 0
