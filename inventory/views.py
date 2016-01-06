@@ -8,7 +8,7 @@ from .models import *
 def _update_stock(request, change_type):
     products = Product.objects.all().filter(discontinued=False)
     if request.method == 'GET':
-        users = User.objects.all().filter(active=True).order_by('name')
+        users = User.objects.all().filter(is_active=True).order_by('username')
         context = {'sellables': products.filter(category=0), #FIXME: Magic numbers
                    'refundables': products.filter(category=1),
                    'names': users}

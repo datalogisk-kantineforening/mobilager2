@@ -49,12 +49,11 @@
 {% block content %}
 <form method="POST" action="{% block post-action %}{% endblock %}">
     {% csrf_token %}
-
     <div class="container mb2 p1"><div class="block">Hvem er med?</div>
         <div id="names" class=".flex-wrap">
             {% for name in names %}
             <input type="checkbox" class="who" id="who{{name.pk}}" name="who" value="{{ name.pk }}" />
-            <label for="who{{name.pk}}">{{ name.name|capfirst }}</label>
+            <label for="who{{name.pk}}">{{ name.username|capfirst }}</label>
             {% endfor %}
         </div>
     </div>
