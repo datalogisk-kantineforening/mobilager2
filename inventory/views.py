@@ -32,7 +32,6 @@ def _update_stock(request, change_type):
                 changed = req_qty != p.quantity
                 updated.append((p, req_qty, changed))
                 # TODO: Tell the user whats wrong in a nicer way
-                print(change_type, p.category, req_qty, p.quantity)
                 if not (req_qty >= 0 and
                         qty_verify_funs[change_type][p.category](req_qty, p.quantity)):
                     transaction.set_rollback(True)
