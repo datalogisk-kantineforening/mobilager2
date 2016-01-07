@@ -3,5 +3,5 @@
         <div>{{ product.name }}</div>
         <div class="gray">{{ product.vendor }}</div>
     </td>
-    <td><input type="text" class="qty-widget" name="{{ product.pk }}_qty" value="{{ product.quantity }}" data-category="{{ category }}" data-id="{{ product.pk }}" /></td>
+    <td><input type="text" class="qty-widget" name="{{ product.pk }}_qty" value="{{ product.quantity }}" data-category="{{ category }}" data-id="{{ product.pk }}" data-curval="{{ product.quantity }}" /></td>
 </tr>

@@ -33,7 +33,6 @@
                  data = f.serialize(),
                  action = f.attr("action");
              $.post(action, data).done(function(data) {
-                 console.log(data);
                  $('.prodformrow-{{ category }}').replaceWith(data);
                  $.get("fragments/addbtn?category={{ category }}").done(function(form) {
                      $('.nextrow-placeholder-{{ category }}').replaceWith(form);

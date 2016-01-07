@@ -8,6 +8,9 @@
  .nqty { background-color:red }
  .qfield { width: 40px;
      border: none;}
+ .form-error {
+     display: none;
+ }
 </style>
 
 <script type="text/javascript">
@@ -44,27 +47,65 @@
      });
 
      $(window).trigger("qty:create");
+
+     $("#updateform").on("submit", function(event){
+         event.preventDefault();
+
+         var error = false;
+         $('.form-error').hide();
+
+         // Make sure at least one name is checked
+         if (! $("input[name='who']:checked").length > 0){
+             $("#names-error").show();
+             error = true;
+         }
+
+         // Make sure at least one quantity is changed
+         // FIXME: Rename class to qty-field or something. More logical when we
+         // use it this way
+         var qty_changed = $('.qty-widget').map(function(_i, e) {
+             return $(e).val() != $(e).data("curval");
+         }).get().reduce(function(cur, prev, _i, _a) {
+             return cur || prev;
+         }, false);
+         if(!qty_changed) {
+             $("#qty-error").show();
+         }
+         console.log(qty_changed);
+         error |= (!qty_changed);
+
+         if(error) {
+             $('html, body').animate({
+                 scrollTop: $(".form-error:visible").first().offset().top
+             }, 100);
+             return false;
+         }
+
+         this.submit();
+     });
  });
 
 </script>
 {% endblock %}
 
 {% block content %}
-<form method="POST" action="{% block post-action %}{% endblock %}">
+<form method="POST" id="updateform" action="{% block post-action %}{% endblock %}">
     {% csrf_token %}
     <div class="container mb2 p1"><div class="block">Hvem er med?</div>
-        <div id="names" class=".flex-wrap">
+        <p class="form-error bold red" id="names-error">Vælg mindst en person</p>
+        <fieldset id="names" class="flex-wrap" style="border: none">
             {% for name in names %}
             <input type="checkbox" class="who" id="who{{name.pk}}" name="who" value="{{ name.pk }}" />
             <label for="who{{name.pk}}">{{ name.username|capfirst }}</label>
             {% endfor %}
-        </div>
+        </fieldset>
     </div>
     <div class="container p1 mb2">
         <label for="what" class="block">Beskrivelse</label>
         <input type="text" name="what" class="field"/>
     </div>
     <h2>Salgsvarer</h2>
+    <p class="bold red form-error" id="qty-error">Mindst en kvantitet skal ændres
     <table class="sortable">
         <thead>
             <tr>
