@@ -18,29 +18,32 @@
          });
      $( "input[type=submit]" ).button();
 
-     $(".qty-widget-sellable").each(
-         function(i, e){
-             $(e).quantity({'id': i, 'validator':
-            {% block validator-sellable %}
-                            function(v) {
-                                return true;
-                            }
-                 {% endblock %}
+     // FIXME: Is there a better way to do this?
+     $(window).on("qty:create", function(e) {
+         $(".qty-widget").each(function(i, e) {
+             var e = $(this);
+             if ( e.data("category") == "sellable") {
+                 e.quantity({'id': e.data("id"), 'validator':
+                             {% block validator-sellable %}
+                     function(v) {
+                         return true;
+                     }
+                     {% endblock %}
+                 });
+             } else if ( e.data("category") == "refundable" ) {
+                 e.quantity({'id': e.data("id"), 'validator':
+                             {% block validator-refundable %}
+                     function(v) {
+                         return true;
+                     }
+                     {% endblock %}
+                 });
+             }
              });
 
-         });
-     $(".qty-widget-refundable").each(
-         function(i, e){
-             $(e).quantity({'id': i, 'validator':
-                            {% block validator-refundable %}
-                 function(v) {
-                     return true;
-                 }
-                 {% endblock %}
-             });
+     });
 
-         });
-
+     $(window).trigger("qty:create");
  });
 
 </script>
@@ -73,16 +76,12 @@
         </thead>
         <tbody>
             {% for product in sellables %}
-            <tr>
-                <td class="center align-middle">
-                    <div>{{ product.name }}</div>
-                    <div class="gray">{{ product.vendor }}</div>
-                </td>
-                <td><input type="text" class="qty-widget-sellable" name="{{ product.pk }}_qty" value="{{ product.quantity }}" /></td>
-            </tr>
+            {% include "product-fragment.html" with category="sellable" %}
             {% endfor %}
+            {% block sellable-extra-rows %}{% endblock %}
+
         </tbody>
-    </table>
+    </table>-
     <h2>Returvarer (pant)</h2>
     <table class="sortable">
         <thead>
@@ -95,14 +94,9 @@
         </thead>
         <tbody>
             {% for product in refundables %}
-            <tr>
-                <td class="center align-middle">
-                    <div>{{ product.name }}</div>
-                    <div class="gray">{{ product.vendor }}</div>
-                </td>
-                <td><input type="text" class="qty-widget-refundable" name="{{ product.pk }}_qty" value="{{ product.quantity }}" /></td>
-            </tr>
+            {% include "product-fragment.html" with category="refundable" %}
             {% endfor %}
+            {% block refundable-extra-rows %}{% endblock %}
         </tbody>
     </table>
 

@@ -1,15 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Vendor(models.Model):
     name = models.CharField(max_length=255, primary_key=True)
-    def __str__(self):
-        return str(self.name)
-
-class User(models.Model):
-    name = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
-    active = models.BooleanField()
-
     def __str__(self):
         return str(self.name)
 

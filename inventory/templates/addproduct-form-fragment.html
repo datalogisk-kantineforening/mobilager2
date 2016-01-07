@@ -1,0 +1,47 @@
+<form id="newproduct" action="fragments/addform/?category={{ category }}">
+    {% csrf_token %}
+    <div class="block">
+        <label for="pname">Produktnavn</label>
+        <input type="text" name="pname" id="pname" class="field"/>
+    </div>
+    <div class="block">
+        <label for="vendor">Leverandør</label>
+        <input type="text" name="vendor" id="vendor" class="field mt1" />
+    </div>
+    <input type="submit" name="addprod" id="addprod" class="btn border mt1" value="Add product"/>
+    <script type="text/javascript">
+     $(function() {
+         var products = [
+             {% for p in products %}
+             "{{ p.name }}",
+             {% endfor %}
+         ];
+         var vendors = [
+             {% for v in vendors %}
+             "{{ v.name }}",
+             {% endfor %}
+         ];
+         $("#pname").autocomplete({
+             source: products
+         });
+         $("#vendor").autocomplete({
+             source: vendors
+         });
+         $("#newproduct").submit(function(e) {
+             e.preventDefault();
+             var f = $(this),
+                 data = f.serialize(),
+                 action = f.attr("action");
+             $.post(action, data).done(function(data) {
+                 console.log(data);
+                 $('.prodformrow-{{ category }}').replaceWith(data);
+                 $.get("fragments/addbtn?category={{ category }}").done(function(form) {
+                     $('.nextrow-placeholder-{{ category }}').replaceWith(form);
+                 });
+                 $(window).trigger("qty:create");
+             });
+
+         });
+     });
+    </script>
+</form>

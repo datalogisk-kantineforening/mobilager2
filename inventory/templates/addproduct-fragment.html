@@ -1,0 +1,21 @@
+<tr class="center prodformrow-{{ category }} addprod-{{ category }}">
+    {% load staticfiles %}
+    <td colspan="2" class="align-middle"><div class="block btn align-middle addproduct" data-category="{{ category }}" ><img src="{% static "images/add.png" %}" type="image/png" style=" height: 2.5em" />Add product</div></td>
+        <script type="text/javascript">
+         $(function() {
+             $(".addproduct").on("click touchstart", function(e) {
+                 e.preventDefault();
+                 var category = $(this).data('category');
+                 $.ajax({
+                     url: "fragments/addform?category=" + category ,
+                     context: this
+                 }).done(function(data) {
+                     $(this).replaceWith(data);
+                 });
+             });
+         });
+        </script>
+</tr>
+<tr class="nextrow-placeholder-{{ category }}">
+    <td colspan="2"></td>
+</tr>

@@ -15,5 +15,12 @@ return v <= 0;
 }
 {% endblock %}
 
-
 {% block post-action %}/restock{% endblock %}
+
+{% block sellable-extra-rows %}
+{% include "addproduct-fragment.html" with category="sellable" only %}
+{% endblock %}
+
+{% block refundable-extra-rows %}
+{% include "addproduct-fragment.html" with category="refundable" only %}
+{% endblock %}
