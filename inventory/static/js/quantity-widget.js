@@ -80,7 +80,7 @@ $(function() {
             s.delta.on("blur", this, function(event) {
                 var s = event.data.options._state;
                 var curdelta = parseInt(s.delta.val());
-                s.delta.val(s.curval);
+                s.delta.val(s.curval - s.prevval);
             });
             this.refresh();
         },
