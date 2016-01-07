@@ -22,12 +22,21 @@ def _update_stock(request, change_type):
                    'names': users}
         return render(request, change_type + ".html", context)
     elif request.method == 'POST':
+        if len(request.POST.getlist("who")) == 0:
+            return HttpResponse("From validation error: no users selected")
+
         with transaction.atomic():
             updated = []
             for p in products:
                 req_qty = int(request.POST[str(p.pk) + "_qty"])
                 changed = req_qty != p.quantity
                 updated.append((p, req_qty, changed))
+                # TODO: Tell the user whats wrong in a nicer way
+                print(change_type, p.category, req_qty, p.quantity)
+                if not (req_qty >= 0 and
+                        qty_verify_funs[change_type][p.category](req_qty, p.quantity)):
+                    transaction.set_rollback(True)
+                    return HttpResponse("Form validation error: Invalid product quantity");
 
             if any(map(lambda t: t[2], updated)):
                 # TODO: Do something better with EventType handling
@@ -50,8 +59,8 @@ def _update_stock(request, change_type):
 
                 return HttpResponseRedirect("/"+ change_type)
             else:
-        # TODO: no changes were made. Show error message
-                return HttpResponseRedirect("/"+ change_type)
+                transaction.set_rollback(True)
+                return HttpResponse("Form validation error: No quantities changed")
 
 @login_required
 def stock(request):
