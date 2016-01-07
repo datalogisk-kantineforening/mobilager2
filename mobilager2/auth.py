@@ -4,7 +4,7 @@ import base64
 import os
 
 from django.conf import settings
-from django.contrib.auth.models import User, check_password
+from django.contrib.auth.models import User
 
 NFIELDS = 5
 USERNAME, CRYPT, REALNAME, EMAIL, GROUPS = list(range(NFIELDS))
