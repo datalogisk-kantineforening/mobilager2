@@ -90,7 +90,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'mobilager2.wsgi.application'
 
 AUTHENTICATION_BACKENDS = ['mobilager2.auth.DokuwikiBackend']
-DOKUWIKI_AUTH_FILE = '/home/truls/uni/kantine/mobilager2/users.auth.php'
+
+if devel:
+    DOKUWIKI_AUTH_FILE = 'users.auth.php'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
