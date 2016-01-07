@@ -1,13 +1,3 @@
-
-/*$(function() {
-    console.log($(".quantity-widget"));
-    $(".quantity-widget").each(
-        function(_i, e){
-            e.quantity({'validator': function(v) {
-                return v <= 0;
-            }});});
-});*/
-
 $(function() {
 
     $.widget("custom.quantity", {
@@ -43,10 +33,8 @@ $(function() {
               Change type of original text field to hidde
               Create new text field which displays the delta
               Insert full element including new structure adjacent
-                 to old element
-              
+              to old element
             */
-            // Adjust quantity to initial value of field
 
             var o = this.options;
             var s = o._state;
@@ -60,9 +48,7 @@ $(function() {
 <div>Efter: <span class="new-qty"></span></div>\
 </div>');
 
-
-
-           console.log($(".minus", block));
+            console.log($(".minus", block));
             s.minus = $(".minus", block);
             s.plus = $(".plus", block);
             s.delta = $('.delta', block);
@@ -96,6 +82,4 @@ $(function() {
             s.cur.html(s.curval)
             this.element.val(s.curval);
         }});
-        
-    //$("#qty").quantity();
 });
