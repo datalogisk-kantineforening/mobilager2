@@ -36,12 +36,14 @@ def _update_stock(request, change_type):
                 event.save()
                 for u in request.POST.getlist("who"):
                     event.eventname_set.add(EventName(
-                        name = User.objects.get(pk = u)))
+                        name = User.objects.get(pk = u)),
+                                            bulk=False)
 
                 for p, req_qty, changed in updated:
                     event.change_set.add(Change(product = p,
                                                 quantity = req_qty,
-                                                delta = req_qty - p.quantity))
+                                                delta = req_qty - p.quantity),
+                                         bulk=False)
                     if changed:
                         p.quantity = req_qty
                         p.save()
