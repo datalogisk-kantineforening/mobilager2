@@ -24,7 +24,7 @@ $(function() {
                 s.delta.val(newval);
                 s.curval = curval;
                 this.refresh();
-            };
+            }
         },
 
         _create: function() {
@@ -48,7 +48,6 @@ $(function() {
 <div>Efter: <span class="new-qty"></span></div>\
 </div>');
 
-            console.log($(".minus", block));
             s.minus = $(".minus", block);
             s.plus = $(".plus", block);
             s.delta = $('.delta', block);
@@ -56,6 +55,7 @@ $(function() {
             s.cur = $('.new-qty', block);
 
             s.curval = parseInt(this.element.val());
+            s.prevval = s.curval;
             s.prev.html(s.curval);
 
             // Set old formfield to hidden
@@ -73,7 +73,15 @@ $(function() {
                                    event.data);
                 event.preventDefault();
             });
-
+            s.delta.on("keyup", this, function(event) {
+                event.data._adjust(function(v) {return v;},
+                                   event.data);
+            });
+            s.delta.on("blur", this, function(event) {
+                var s = event.data.options._state;
+                var curdelta = parseInt(s.delta.val());
+                s.delta.val(s.curval);
+            });
             this.refresh();
         },
 
