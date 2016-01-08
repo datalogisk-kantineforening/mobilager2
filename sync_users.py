@@ -4,6 +4,7 @@ import sys
 os.environ['DJANGO_SETTINGS_MODULE'] = "mobilager2.settings"
 
 import django
+django.setup()
 from django.contrib.auth.models import User
 
 from mobilager2.auth import *
@@ -32,7 +33,6 @@ def main():
 
     pws = sys.argv[1]
 
-    django.setup()
     auth = DokuwikiBackend()
     sync_users(pws)
     sys.exit(0)
