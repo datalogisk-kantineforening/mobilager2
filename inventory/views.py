@@ -81,7 +81,7 @@ def correction(request):
 
 @login_required
 def history(request):
-    events = Event.objects.order_by("-date").order_by("-time")
+    events = Event.objects.order_by("-date", "-time")
     e = list(map(lambda x: {'event': x,
                             'changes': x.change_set.filter(~Q(delta = 0))},
              events))
