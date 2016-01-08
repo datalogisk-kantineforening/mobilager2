@@ -19,9 +19,13 @@
 
 {% for e in events %}
 <div class="container border mb1 p1">
-  <div class="bold block">{{ e.event.event_type }} udført af
-    {{ e.event.eventname_set.all|danishlist }}
-      {{ e.event.date }} {{ e.event.time }}</div>
+    <div class="flex flex-start">
+        <div class="bold block flex-auto">{{ e.event.event_type }} udført af
+            {{ e.event.eventbyuser_set.all|danishlist }}
+            {{ e.event.date }} {{ e.event.time }}
+        </div>
+        <div class="block gray" style="font-size: 0.8em">Indlogget bruger: {{ e.event.logged_user }}</div>
+    </div>
   <div class="block gray" style="font-size: 0.8em">{{ e.event.description }}</div>
 
   <div class="clearfix p1" style="font-size: 0.85em">

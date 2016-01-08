@@ -35,6 +35,7 @@ class Event(models.Model):
     date = models.DateField(auto_now_add=True)
     time = models.TimeField(auto_now_add=True)
     event_type = models.ForeignKey(EventType)
+    logged_user = models.ForeignKey(User)
 
     def __str__(self):
         return str(self.description)
@@ -42,7 +43,7 @@ class Event(models.Model):
     class Meta:
         ordering = ["date", "time"]
 
-class EventName(models.Model):
+class EventByUser(models.Model):
     name = models.ForeignKey(User)
     event = models.ForeignKey(Event)
 
