@@ -108,6 +108,8 @@ if devel:
 else:
     DATABASES = mobilager_db.DATABASES
 
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_AGE = 3600 #1h
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
