@@ -107,8 +107,6 @@ def addform_fragment(request):
         catn = int(category == 'refundable')
         p = request.POST
 
-        print(p['pname'], p['vendor'])
-
         # Check if vendor exists by case-insensitive look up by name, otherwise create new
         try:
             vendor = Vendor.objects.get(name__iexact=p['vendor'])
