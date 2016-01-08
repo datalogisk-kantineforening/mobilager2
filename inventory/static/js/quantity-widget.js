@@ -54,7 +54,7 @@ $(function() {
             s.prev = $('.prev-qty', block);
             s.cur = $('.new-qty', block);
 
-            s.curval = parseInt(this.element.val());
+            s.curval = parseInt(this.element.data("curval"));
             s.prevval = s.curval;
             s.prev.html(s.curval);
 
