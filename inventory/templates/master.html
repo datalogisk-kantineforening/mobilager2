@@ -4,20 +4,17 @@
         <meta charset="utf-8" />
     <title>Lagerstyring - {% block header %} {% endblock %}</title>
     {% load staticfiles %}
-
     <script type="text/javascript" src="{% static  "js/jquery-2.1.4.min.js" %}" ></script>
     <script type="text/javascript" src="{% static  "js/jquery-ui.min.js" %}" ></script>
     <script type="text/javascript" src="{% static  "js/jquery.ui.touch-punch.min.js" %}" ></script>
     <link rel="stylesheet" type="text/css" href="{% static "css/jquery-ui.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "css/basscss.min.css" %}" />
-
-
     {% block script %} {% endblock %}
   </head>
-  <body>
+  <body class="mb10">
     <div class="container">
       <header class="center">
-          <h1>Kantinens Lagerstyring <span class="gray">0.2-alpha</span></h1>
+          <h1>Kantinens Lagerstyring <span class="gray">0.3</span></h1>
       </header>
       <nav class="sm-flex center nowrap mb2">
         <div class="flex-auto">
@@ -40,11 +37,14 @@
             <a class="btn block" href="/accounts/logout">Log ud</a>
         </div>
         </nav>
-        <main>
+        <main class="mb4">
           <section>
             {% block content %} {% endblock %}
-      </section>
+          </section>
         </main>
-  </div>
+        <footer class="mb2">
+            <p style="font-size:0.8em" class="gray center"> Mobilager 0.3 - Copyright 2016 Truls Asheim &lt;truls@asheim.dk&gt and Datalogisk Kantineforening &lt;bestyrelsen@kantinen.org&gt;; - AGPL 3 licensed - <a href="https://github.com/datalogisk-kantineforening/mobilager2">Code on github</a> </p>
+        </footer>
+    </div>
   </body>
 </html>
