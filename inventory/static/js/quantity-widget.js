@@ -82,6 +82,9 @@ $(function() {
                 var curdelta = parseInt(s.delta.val());
                 s.delta.val(s.curval - s.prevval);
             });
+            s.delta.on("click", this, function(event) {
+                $(this).select();
+            });
             this.refresh();
         },
 
