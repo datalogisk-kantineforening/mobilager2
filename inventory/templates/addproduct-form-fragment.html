@@ -1,4 +1,4 @@
-<form id="newproduct" action="fragments/addform/?category={{ category }}">
+<form id="newproduct-{{ category }}" action="fragments/addform/?category={{ category }}">
     {% csrf_token %}
     <div class="block">
         <label for="pname">Produktnavn</label>
@@ -27,7 +27,7 @@
          $("#vendor").autocomplete({
              source: vendors
          });
-         $("#newproduct").submit(function(e) {
+         $("#newproduct-{{ category }}").submit(function(e) {
              e.preventDefault();
              var f = $(this),
                  data = f.serialize(),
