@@ -14,7 +14,7 @@ qty_verify_funs = {'restock': {0: lambda a, b: a >= b,
                                   1: lambda a, b: True}}
 
 def _update_stock(request, change_type):
-    products = Product.objects.all().filter(discontinued=False)
+    products = Product.objects.all().filter(discontinued=False).order_by('name')
     if request.method == 'GET':
         users = User.objects.all().filter(is_active=True).order_by('username')
         context = {'sellables': products.filter(category=0), #FIXME: Magic numbers
