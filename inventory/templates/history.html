@@ -29,24 +29,24 @@
   <div class="block gray" style="font-size: 0.8em">{{ e.event.description }}</div>
 
   <div class="clearfix p1" style="font-size: 0.85em">
-      <div class="col col-2 p1 bold bg-1d">Produkt</div>
-      <div class="col col-2 p1 bold bg-1l">Kvantitet</div>
-      <div class="col col-2 p1 bold bg-1d">Ændring</div>
-      <div class="col col-2 p1 bold bg-2l">Produkt</div>
-      <div class="col col-2 p1 bold bg-2d">Kvantitet</div>
-      <div class="col col-2 p1 bold bg-2l">Ændring</div>
+      <div class="col col-4 p1 bold bg-1d">Produkt</div>
+      <div class="col col-1 p1 bold bg-1l">Kvantitet</div>
+      <div class="col col-1 p1 bold bg-1d">Ændring</div>
+      <div class="col col-4 p1 bold bg-2l">Produkt</div>
+      <div class="col col-1 p1 bold bg-2d">Kvantitet</div>
+      <div class="col col-1 p1 bold bg-2l">Ændring</div>
 
       {% for change in e.changes %}
 
-      <div class="col col-2 px1 {{ forloop.counter|divisibleby:2|yesno:'bg-2l,bg-1d' }}">{{ change.product }}</div>
-      <div class="col col-2 px1 {{ forloop.counter|divisibleby:2|yesno:'bg-2d,bg-1l' }}">{{ change.quantity }}</div>
-      <div class="col col-2 px1 {{ forloop.counter|divisibleby:2|yesno:'bg-2l,bg-1d' }}">{{ change.delta }}</div>
+      <div class="col col-4 px1 {{ forloop.counter|divisibleby:2|yesno:'bg-2l,bg-1d' }}">{{ change.product }}</div>
+      <div class="col col-1 px1 {{ forloop.counter|divisibleby:2|yesno:'bg-2d,bg-1l' }}">{{ change.quantity }}</div>
+      <div class="col col-1 px1 {{ forloop.counter|divisibleby:2|yesno:'bg-2l,bg-1d' }}">{{ change.delta }}</div>
       {% endfor %}
 
       {% if not e.changes|length|divisibleby:2 %}
-      <div class="col col-2 px1 bg-2l">&nbsp;</div>
-      <div class="col col-2 px1 bg-2d">&nbsp;</div>
-      <div class="col col-2 px1 bg-2l">&nbsp;</div>
+      <div class="col col-4 px1 bg-2l">&nbsp;</div>
+      <div class="col col-1 px1 bg-2d">&nbsp;</div>
+      <div class="col col-1 px1 bg-2l">&nbsp;</div>
       {% endif %}
 
   </div>
