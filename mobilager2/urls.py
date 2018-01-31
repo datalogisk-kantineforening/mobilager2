@@ -26,9 +26,9 @@ urlpatterns = [
     url(r'^replenish/?$', views.replenish, name='Opfyldning'),
     url(r'^correction/?$', views.correction, name="Korrektion"),
     url(r'^history/?$', views.history, name='Historik'),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^accounts/login/?$', auth_views.login, {'template_name': 'login.html'}),
-    url(r'^accounts/logout/?$', auth_views.logout, {'next_page': '/'}),
+    url(r'^admin/', admin.site.urls),
+    url(r'^accounts/login/?$', auth_views.login, {'template_name': 'login.html'}, name="django.contrib.auth.views.login"),
+    url(r'^accounts/logout/?$', auth_views.logout, {'next_page': '/'}, name="django.contrib.auth.views.logout"),
     url(r'^fragments/addform/?$', views.addform_fragment, name="addform_fragment"),
     url(r'^fragments/addbtn/?$', views.addbtn_fragment, name="addbtn_fragment"),
 ]

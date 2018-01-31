@@ -43,7 +43,7 @@ else:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = devel
 
-ALLOWED_HOSTS = ['mobilager.kantinen.org']
+ALLOWED_HOSTS = ['mobilager.kantinen.org', 'localhost']
 
 
 # Application definition
@@ -58,12 +58,11 @@ INSTALLED_APPS = (
     'inventory'
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',

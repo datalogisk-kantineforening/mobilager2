@@ -37,8 +37,8 @@ class Migration(migrations.Migration):
             name='EventName',
             fields=[
                 ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('event', models.ForeignKey(to='inventory.Event')),
-                ('name', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('event', models.ForeignKey(to='inventory.Event', on_delete=models.CASCADE)),
+                ('name', models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -69,21 +69,21 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='product',
             name='vendor',
-            field=models.ForeignKey(to='inventory.Vendor'),
+            field=models.ForeignKey(to='inventory.Vendor', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='event',
             name='event_type',
-            field=models.ForeignKey(to='inventory.EventType'),
+            field=models.ForeignKey(to='inventory.EventType', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='change',
             name='event',
-            field=models.ForeignKey(to='inventory.Event'),
+            field=models.ForeignKey(to='inventory.Event', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='change',
             name='product',
-            field=models.ForeignKey(to='inventory.Product'),
+            field=models.ForeignKey(to='inventory.Product', on_delete=models.CASCADE),
         ),
     ]
