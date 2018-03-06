@@ -8,6 +8,7 @@ required but it's recommended to set up a virtualenv
 
 - Install the required packages with `pip install -r requirements.txt`
 - Run the migrations `python manage.py migrate`
+- Load the test database `python manage.py loaddata fixtures/EventType.json`
 - Set the environment variable `DJANGO_ENV="DEV"` (on UNIX like systems run
 `export DJANGO_ENV=DEV`)
 - Create a user by running `python manage.py createsuperuser`

@@ -1,0 +1,1 @@
+[{"model": "inventory.eventtype", "pk": 1, "fields": {"tag": "restock", "name": "Levering"}}, {"model": "inventory.eventtype", "pk": 2, "fields": {"tag": "correction", "name": "Korrektion"}}, {"model": "inventory.eventtype", "pk": 3, "fields": {"tag": "replenish", "name": "Opfyldning"}}]
