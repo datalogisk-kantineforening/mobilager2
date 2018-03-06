@@ -39,9 +39,9 @@ def _update_stock(request, change_type):
 
             if any(map(lambda t: t[2], updated)):
                 # TODO: Do something better with EventType handling
-                event = Event(description = request.POST['what'],
-                              event_type = EventType.objects.get(tag = change_type),
-                              logged_user = request.user)
+                event = Event(description=request.POST['what'],
+                              event_type=EventType.objects.get(tag=change_type),
+                              logged_user=request.user)
                 event.save()
                 for u in request.POST.getlist("who"):
                     event.eventbyuser_set.add(EventByUser(
