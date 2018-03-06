@@ -110,7 +110,7 @@ def addform_fragment(request):
 
         # Check if vendor exists by case-insensitive look up by name, otherwise create new
         try:
-            vendor = Vendor.objects.get(name__iexact=p['vendor'])
+            vendor = Vendor.objects.get(name__iexact=p['vendor']).strip()
         except Vendor.DoesNotExist:
             vendor = Vendor(name=p['vendor'])
             vendor.save()
