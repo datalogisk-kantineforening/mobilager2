@@ -112,7 +112,7 @@ def addform_fragment(request):
         try:
             vendor = Vendor.objects.get(name__iexact=p['vendor'].strip())
         except Vendor.DoesNotExist:
-            vendor = Vendor(name=p['vendor'])
+            vendor = Vendor(name=p['vendor'].strip())
             vendor.save()
 
         product = Product(category=catn, name=p['pname'], vendor=vendor)
