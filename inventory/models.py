@@ -1,10 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Vendor(models.Model):
     name = models.CharField(max_length=255, primary_key=True)
+
     def __str__(self):
         return str(self.name)
+
 
 class Product(models.Model):
     categories = tuple(enumerate(('Sellable',
@@ -21,6 +24,7 @@ class Product(models.Model):
 
     def __str__(self):
         return str(self.name)
+
 
 class EventType(models.Model):
     tag = models.CharField(max_length=20)
@@ -43,12 +47,14 @@ class Event(models.Model):
     class Meta:
         ordering = ["date", "time"]
 
+
 class EventByUser(models.Model):
     name = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.name)
+
 
 class Change(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)

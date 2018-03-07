@@ -10,6 +10,7 @@ NFIELDS = 5
 USERNAME, CRYPT, REALNAME, EMAIL, GROUPS = list(range(NFIELDS))
 GROUP_FILTER = lambda x: 'user' in x[GROUPS]
 
+
 class DokuwikiBackend:
     @staticmethod
     def get_update_user(username, fields):
@@ -53,7 +54,8 @@ class DokuwikiBackend:
                 if filter_pred(fields):
                     yield fields
 
-    def authenticate(self, username=None, password=None):
+    @staticmethod
+    def authenticate(username=None, password=None):
         # Look for username in the dokuwiki auth file
         for l in DokuwikiBackend.parse_file(settings.DOKUWIKI_AUTH_FILE,
                                             GROUP_FILTER):
@@ -67,7 +69,8 @@ class DokuwikiBackend:
         # User doesn't exists in dokuwiki password files
         return None
 
-    def get_user(self, user_id):
+    @staticmethod
+    def get_user(user_id):
         try:
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
