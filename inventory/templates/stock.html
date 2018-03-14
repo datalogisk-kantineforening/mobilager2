@@ -4,7 +4,7 @@
 {# {% block script %} <script type="text/javascript" src="{% static "js/ #}
 {% block script %}
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static "css/tablesorter-blue.css" %}" />
+<link rel="stylesheet" type="text/css" href="{% static "css/theme.blue.css" %}" />
 <script type="text/javascript" src="{% static "js/jquery.tablesorter.min.js" %}"> </script>
 
 <script type="text/javascript">
@@ -18,7 +18,7 @@
 
 {% block content %}
 
-<table id="stock" class="border tablesorter">
+<table id="stock" class="border tablesorter-blue">
   <thead>
     <tr>
       <th>Navn</th>
@@ -33,7 +33,7 @@
       <td>{{ product.name }}</td>
       <td>{{ product.vendor }}</td>
       <td>{{ product.quantity }}</td>
-      <td>{{ product.updated }}</td>
+      <td data-text="{{ product.updated|date:'Y-m-d H:i:s' }}">{{ product.updated }}</td>
     </tr>
     {% endfor %}
   </tbody>

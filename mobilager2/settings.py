@@ -22,7 +22,7 @@ except KeyError:
     devel = False
 
 local_dir = ''
-if not(devel):
+if not devel:
     local_dir = os.environ["MOBILAGER_LOCAL_SETTINGS"]
     import sys
     sys.path.append(local_dir)

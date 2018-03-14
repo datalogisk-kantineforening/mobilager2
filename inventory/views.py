@@ -13,6 +13,7 @@ qty_verify_funs = {'restock': {0: lambda a, b: a >= b,
                    'correction': {0: lambda a, b: True,
                                   1: lambda a, b: True}}
 
+
 def _update_stock(request, change_type):
     products = Product.objects.all().filter(discontinued=False).order_by('name')
     if request.method == 'GET':
@@ -39,9 +40,9 @@ def _update_stock(request, change_type):
 
             if any(map(lambda t: t[2], updated)):
                 # TODO: Do something better with EventType handling
-                event = Event(description = request.POST['what'],
-                              event_type = EventType.objects.get(tag = change_type),
-                              logged_user = request.user)
+                event = Event(description=request.POST['what'],
+                              event_type=EventType.objects.get(tag=change_type),
+                              logged_user=request.user)
                 event.save()
                 for u in request.POST.getlist("who"):
                     event.eventbyuser_set.add(EventByUser(
@@ -62,23 +63,28 @@ def _update_stock(request, change_type):
                 transaction.set_rollback(True)
                 return HttpResponse("Form validation error: No quantities changed")
 
+
 @login_required
 def stock(request):
     products = Product.objects.all().filter(discontinued=False)
     context = {'products': products}
     return render(request, "stock.html", context)
 
+
 @login_required
 def replenish(request):
     return _update_stock(request, "replenish")
+
 
 @login_required
 def restock(request):
     return _update_stock(request, "restock")
 
+
 @login_required
 def correction(request):
     return _update_stock(request, "correction")
+
 
 @login_required
 def history(request):
@@ -89,10 +95,12 @@ def history(request):
 
     return render(request, "history.html", {'events': e})
 
+
 @login_required
 def addbtn_fragment(request):
     category = request.GET['category']
     return render(request, "addproduct-fragment.html", {'category': category})
+
 
 @login_required
 def addform_fragment(request):
@@ -110,9 +118,9 @@ def addform_fragment(request):
 
         # Check if vendor exists by case-insensitive look up by name, otherwise create new
         try:
-            vendor = Vendor.objects.get(name__iexact=p['vendor'])
+            vendor = Vendor.objects.get(name__iexact=p['vendor'].strip())
         except Vendor.DoesNotExist:
-            vendor = Vendor(name=p['vendor'])
+            vendor = Vendor(name=p['vendor'].strip())
             vendor.save()
 
         product = Product(category=catn, name=p['pname'], vendor=vendor)
@@ -120,4 +128,4 @@ def addform_fragment(request):
 
         return render(request, "product-fragment.html", {'product': product,
                                                          'category': category})
-        #product = Product(category=catn, name=p['']
+        #  product = Product(category=catn, name=p['']
