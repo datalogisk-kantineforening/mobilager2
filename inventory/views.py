@@ -32,7 +32,11 @@ def _update_stock(request, change_type):
         with transaction.atomic():
             updated = []
             for p in products:
-                req_qty = int(request.POST[str(p.pk) + "_qty"])
+                p_qty = str(p.pk) + "_qty"
+                if p_qty in request.POST:
+                    req_qty = int(request.POST[p_qty])
+                else:
+                    continue
                 changed = req_qty != p.quantity
                 updated.append((p, req_qty, changed))
                 # TODO: Tell the user whats wrong in a nicer way
