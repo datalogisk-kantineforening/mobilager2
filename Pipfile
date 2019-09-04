@@ -6,8 +6,8 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-pytz = "~=2018.0"
-Django = "~=2.0.0"
+pytz = "~=2019.0"
+Django = "~=2.2.0"
 psycopg2 = "~=2.8.0"
 
 [requires]
