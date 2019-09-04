@@ -33,6 +33,8 @@ urlpatterns = [
     url(r'^accounts/logout/?$',
         auth_views.LogoutView.as_view(next_page='/'),
         name="django.contrib.auth.views.logout"),
-    url(r'^fragments/addform/?$', views.addform_fragment, name="addform_fragment"),
-    url(r'^fragments/addbtn/?$', views.addbtn_fragment, name="addbtn_fragment"),
+    url(r'^fragments/addform/?$',
+        views.addform_fragment, name="addform_fragment"),
+    url(r'^fragments/addbtn/?$',
+        views.addbtn_fragment, name="addbtn_fragment"),
 ]
