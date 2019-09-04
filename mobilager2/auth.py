@@ -55,7 +55,7 @@ class DokuwikiBackend:
                     yield fields
 
     @staticmethod
-    def authenticate(username=None, password=None):
+    def authenticate(_request, username=None, password=None):
         # Look for username in the dokuwiki auth file
         for l in DokuwikiBackend.parse_file(settings.DOKUWIKI_AUTH_FILE,
                                             GROUP_FILTER):
