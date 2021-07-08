@@ -7,7 +7,7 @@ verify_ssl = true
 
 [packages]
 pytz = "~=2019.0"
-Django = "~=2.2.22"
+Django = "~=2.2.24"
 psycopg2 = "~=2.8.0"
 
 [requires]
